@@ -69,27 +69,54 @@ const CondenseVideo = () => {
 
   const disableDuringCompression = status === "condensing";
 
+  // const load = async () => {
+  //   const ffmpeg = ffmpegRef.current;
+  //   await ffmpeg.load({
+  //     coreURL: await toBlobURL(
+  //       `http://localhost:3000/download/ffmpeg-core.js`,
+  //       "text/javascript"
+  //     ),
+  //     wasmURL: await toBlobURL(
+  //       `http://localhost:3000/download/ffmpeg-core.wasm`,
+  //       "application/wasm"
+  //     ),
+  //   });
+  // };
+
   const load = async () => {
     const ffmpeg = ffmpegRef.current;
     await ffmpeg.load({
       coreURL: await toBlobURL(
-        `http://localhost:3000/download/ffmpeg-core.js`,
+        `/download/ffmpeg-core.js`,
         "text/javascript"
       ),
       wasmURL: await toBlobURL(
-        `http://localhost:3000/download/ffmpeg-core.wasm`,
+        `/download/ffmpeg-core.wasm`,
         "application/wasm"
       ),
     });
   };
 
+  // const loadWithToast = () => {
+  //   toast.promise(load, {
+  //     loading: "Downloading necessary packages from FFmpeg for offline use.",
+  //     success: () => {
+  //       return "All necessary file downloaded";
+  //     },
+  //     error: "Error loading FFmpeg packages",
+  //   });
+  // };
+  
   const loadWithToast = () => {
     toast.promise(load, {
       loading: "Downloading necessary packages from FFmpeg for offline use.",
       success: () => {
-        return "All necessary file downloaded";
+        return "All necessary files downloaded";
       },
-      error: "Error loading FFmpeg packages",
+      error: (err) => {
+        console.error("Error loading FFmpeg packages:", err);
+        return "Error loading FFmpeg packages";
+      },
     });
   };
 
